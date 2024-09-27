@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPR</title>
+</head>
+<body>
+    <script>
+        console.log("hello world")
+
+        let computerScore = 0;
+        let humanScore = 0;
+        let computerChoice;
+        let humanChoice;
+
+        function getComputerChoice(){
+            let computerRand = Math.round(Math.random()*2)
+            if (computerRand == 0){
+                computerChoice = "scissors";
+            } 
+            else if (computerRand == 1)
+                computerChoice = "paper";
+            else{
+                computerChoice = "rock";
+            }
+            return computerChoice;
+        }
+
+        function getHumanChoice(){
+            humanChoice = prompt("Enter a choice: Rock | Paper | Scissors").toLowerCase()
+            return humanChoice;
+        }
+
+        function playRound(humanChoice,computerChoice){
+            let result;
+            if(humanChoice == computerChoice){
+                result = "draw";
+            }
+            else if(
+                (humanChoice == "scissors" && computerChoice == "paper") || 
+                (humanChoice == "rock" && computerChoice == "scissors") ||
+                (humanChoice == "paper" && computerChoice == "rock")){
+                result = "human win";
+                humanScore ++;
+            }
+            else{
+                result = "computer win"
+                computerScore ++;
+            }
+            console.log(`Computer Choice: ${computerChoice}`);
+            console.log(`Human Choice: ${humanChoice}`);
+            console.log(`Result: ${result} \nHuman Score: ${humanScore}, Computer Score: ${computerScore}`);
+        }
+
+        function playGame(){
+            for(let i=0; i<5; i++){
+                const humanSelection = getHumanChoice();
+                const computerSelection = getComputerChoice();
+                playRound(humanSelection,computerSelection);
+            }                                  
+        }
+
+        playGame();
+    </script>
+</body>
+</html>
