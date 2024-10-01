@@ -6,16 +6,31 @@
     <title>SPR</title>
 </head>
 <body>
-    <script>
-        console.log("hello world")
 
+    <button id="scissors">scissors</button>
+    <button id="paper">paper</button>
+    <button id="rock">rock</button>
+    <div id="display"></div>
+    <script>
         let computerScore = 0;
         let humanScore = 0;
-        let computerChoice;
-        let humanChoice;
+
+        const scissors = document.querySelector("#scissors")
+        scissors.addEventListener("click",() => playRound("scissors",getComputerChoice()))
+        
+        const paper = document.querySelector("#paper")
+        paper.addEventListener("click",() => playRound("paper",getComputerChoice()))
+
+        const rock = document.querySelector("#rock")
+        rock.addEventListener("click",() => playRound("rock",getComputerChoice()))
+
+        const display = document.querySelector("#display")
+        
+        console.log("hello world")
 
         function getComputerChoice(){
             let computerRand = Math.round(Math.random()*2)
+            let computerChoice;
             if (computerRand == 0){
                 computerChoice = "scissors";
             } 
@@ -27,13 +42,9 @@
             return computerChoice;
         }
 
-        function getHumanChoice(){
-            humanChoice = prompt("Enter a choice: Rock | Paper | Scissors").toLowerCase()
-            return humanChoice;
-        }
-
         function playRound(humanChoice,computerChoice){
             let result;
+
             if(humanChoice == computerChoice){
                 result = "draw";
             }
@@ -41,27 +52,54 @@
                 (humanChoice == "scissors" && computerChoice == "paper") || 
                 (humanChoice == "rock" && computerChoice == "scissors") ||
                 (humanChoice == "paper" && computerChoice == "rock")){
-                result = "human win";
+                result = "human wins round";
                 humanScore ++;
             }
             else{
-                result = "computer win"
+                result = "computer wins round"
                 computerScore ++;
             }
+
+            let roundDetails = document.createElement("p")
+            roundDetails.innerHTML = `Computer Choice: ${computerChoice}<br>
+                                      Human Choice: ${humanChoice}<br>
+                                      Result: ${result}<br>
+                                      Human Score: ${humanScore}, Computer Score: ${computerScore}`;
+
+
+            display.appendChild(roundDetails);
+
             console.log(`Computer Choice: ${computerChoice}`);
             console.log(`Human Choice: ${humanChoice}`);
             console.log(`Result: ${result} \nHuman Score: ${humanScore}, Computer Score: ${computerScore}`);
+            
+            if ((humanScore || computerScore) == 5){
+                let displayVictor = document.createElement("p")
+                if(humanScore == 5){
+                    displayVictor.innerHTML = "Human Wins";
+                }
+                else{
+                    displayVictor.innerHTML = "computer Wins";
+                    
+                } 
+
+                display.appendChild(displayVictor);
+                humanScore = 0;
+                computerScore = 0;
+            }
+        
         }
 
-        function playGame(){
-            for(let i=0; i<5; i++){
-                const humanSelection = getHumanChoice();
-                const computerSelection = getComputerChoice();
-                playRound(humanSelection,computerSelection);
-            }                                  
-        }
+        // function playGame(){
+        //     for(let i=0; i<5; i++){
+        //         const humanSelection = getHumanChoice();
+        //         const computerSelection = getComputerChoice();
+        //         playRound(humanSelection,computerSelection);
+        //     }                                  
+        // }
 
-        playGame();
+        // playGame();
     </script>
 </body>
 </html>
+
